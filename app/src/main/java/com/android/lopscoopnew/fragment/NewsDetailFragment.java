@@ -13,6 +13,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.android.lopscoopnew.R;
 import com.android.lopscoopnew.activity.WebViewActivity;
@@ -21,6 +22,7 @@ import com.android.lopscoopnew.bean.NewData;
 import com.android.lopscoopnew.net.NetConfig;
 import com.android.lopscoopnew.net.QClient;
 import com.android.lopscoopnew.net.QService;
+import com.android.lopscoopnew.utils.NetUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.SimpleClickListener;
 
@@ -121,27 +123,33 @@ public class NewsDetailFragment extends Fragment implements SwipeRefreshLayout.O
 
     private void updateData() {
         srl.setRefreshing(true);
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                QClient.getInstance().create(QService.class, NetConfig.BASEURL)
-                        .getNewsData("test",type)
-                        .subscribeOn(Schedulers.io())
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(new Consumer<NewData>() {
-                            @Override
-                            public void accept(NewData newData) throws Exception {
-                                List<NewData.DataBean> data = newData.getData();
-                                Log.d("news data", "newsData----->" + newData);
-                                if (data != null){
-                                     newsAdapter.setNewData(data);
+        boolean hasNetWork = NetUtils.hasNetWork(getContext());
+        if (hasNetWork){
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    QClient.getInstance().create(QService.class, NetConfig.BASEURL)
+                            .getNewsData("test",type)
+                            .subscribeOn(Schedulers.io())
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .subscribe(new Consumer<NewData>() {
+                                @Override
+                                public void accept(NewData newData) throws Exception {
+                                    List<NewData.DataBean> data = newData.getData();
+                                    Log.d("news data", "newsData----->" + newData);
+                                    if (data != null){
+                                        newsAdapter.setNewData(data);
+                                    }
+                                    srl.setRefreshing(false);
                                 }
-                                srl.setRefreshing(false);
-                            }
-                        });
+                            });
 
-            }
-        }).start();
+                }
+            }).start();
+        }else{
+            Toast.makeText(getActivity().getApplicationContext(),"Please Check NetWork!",Toast.LENGTH_SHORT).show();
+            srl.setRefreshing(false);
+        }
 
     }
 
