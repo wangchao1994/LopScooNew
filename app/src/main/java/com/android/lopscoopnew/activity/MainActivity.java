@@ -11,6 +11,8 @@ import com.android.lopscoopnew.R;
 import com.android.lopscoopnew.base.BaseFragment;
 import com.android.lopscoopnew.fragment.MainFragment;
 import com.android.lopscoopnew.fragment.NewsFragment;
+import com.android.lopscoopnew.fragment.PhotoFragment;
+import com.android.lopscoopnew.fragment.VideoFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,9 +20,13 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity implements RadioGroup.OnCheckedChangeListener {
     private NewsFragment newsFragment;
     private MainFragment mainFragment;
+    private VideoFragment videoFragment;
+    private PhotoFragment photoFragment;
     private RadioGroup radioGroup;
     private RadioButton news;
     private RadioButton main;
+    private RadioButton video;
+    private RadioButton photo;
     private List<BaseFragment> fragments;
     private int position;
     private Fragment currentFragment;
@@ -37,14 +43,20 @@ public class MainActivity extends AppCompatActivity implements RadioGroup.OnChec
         radioGroup.setOnCheckedChangeListener(this);
         news = (RadioButton) findViewById(R.id.news);
         main = (RadioButton) findViewById(R.id.main);
+        video = (RadioButton) findViewById(R.id.video);
+        photo = (RadioButton) findViewById(R.id.photo);
         newsFragment = new NewsFragment();
         mainFragment = new MainFragment();
+        videoFragment = new VideoFragment();
+        photoFragment = new PhotoFragment();
     }
 
     private void initData() {
         fragments = new ArrayList<>();
         fragments.add(newsFragment);
         fragments.add(mainFragment);
+        fragments.add(videoFragment);
+        fragments.add(photoFragment);
         radioGroup.check(R.id.news);
     }
 
@@ -56,6 +68,12 @@ public class MainActivity extends AppCompatActivity implements RadioGroup.OnChec
                 break;
             case R.id.main:
                 position = 1;
+                break;
+            case R.id.video:
+                position = 2;
+                break;
+            case R.id.photo:
+                position = 3;
                 break;
         }
         Fragment fragment = getFragemnt();

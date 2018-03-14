@@ -40,9 +40,9 @@ public class NewsAdapter extends BaseQuickAdapter<NewData.DataBean,BaseViewHolde
         ImageView iv = helper.getView(R.id.iv_news_detail_pic);
         if (thumbnail != null){
             RequestOptions requestOptions = new RequestOptions()
-                    .placeholder(R.mipmap.load_fail_rect)
-                    .error(R.mipmap.load_fail_rect)
-                    .fallback(R.mipmap.load_fail_rect)
+                    .placeholder(R.mipmap.default_loading_rect)
+                    .error(R.mipmap.default_loading_rect)
+                    .fallback(R.mipmap.default_loading_rect)
                     .priority(Priority.HIGH)
                     .diskCacheStrategy(DiskCacheStrategy.NONE);
             Glide.with(mContext).load(item.getThumbnail()).apply(requestOptions).into(iv);
@@ -60,9 +60,6 @@ RequestOptions requestOptions = new RequestOptions()
         .override(600,600) //尺寸
         .transform(new CircleCrop()) //圆角
         .priority(Priority.HIGH) //优先级
-        .diskCacheStrategy(DiskCacheStrategy.NONE); //缓存策略，后面详细介绍
-
+        .diskCacheStrategy(DiskCacheStrategy.NONE); //缓存策略
 Glide.with(this).load(IMG_URL1).apply(requestOptions).into(testIv1);
-Glide.with(this).load(IMG_URL2).apply(requestOptions).into(testIv2);
-
  */

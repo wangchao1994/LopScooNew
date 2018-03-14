@@ -44,6 +44,26 @@
             android:layout_gravity="center"
             android:textColor="@drawable/main_bottom_selector"
             android:text="Joke"/>
+        <RadioButton
+            android:id="@+id/video"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:button="@null"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:textColor="@drawable/main_bottom_selector"
+            android:text="Video"/>
+        <RadioButton
+            android:id="@+id/photo"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:button="@null"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:textColor="@drawable/main_bottom_selector"
+            android:text="Photo"/>
 
     </RadioGroup>
 </LinearLayout>
