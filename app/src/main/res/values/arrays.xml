@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+<!--默认查询所有频道内容-->
+  <string-array name="tabs_name">
+      <item>Humor</item>
+      <item>LifeStyle</item>
+      <item>Entertainment</item>
+      <item>Stories</item>
+      <item>Cricket</item>
+      <item>Quizzes</item>
+      <item>Video</item>
+      <item>Relationship</item>
+      <item>Weirdie</item>
+  </string-array>
+</resources>
