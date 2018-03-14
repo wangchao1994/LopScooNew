@@ -5,6 +5,9 @@ import android.widget.ImageView;
 import com.android.lopscoopnew.R;
 import com.android.lopscoopnew.bean.NewData;
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.Priority;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.RequestOptions;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 
@@ -36,11 +39,30 @@ public class NewsAdapter extends BaseQuickAdapter<NewData.DataBean,BaseViewHolde
         String thumbnail = item.getThumbnail();
         ImageView iv = helper.getView(R.id.iv_news_detail_pic);
         if (thumbnail != null){
-            Glide.with(mContext).load(item.getThumbnail()).into(iv);
-        }else{
-            Glide.with(mContext).load(R.mipmap.load_fail_rect).into(iv);
+            RequestOptions requestOptions = new RequestOptions()
+                    .placeholder(R.mipmap.load_fail_rect)
+                    .error(R.mipmap.load_fail_rect)
+                    .fallback(R.mipmap.load_fail_rect)
+                    .priority(Priority.HIGH)
+                    .diskCacheStrategy(DiskCacheStrategy.NONE);
+            Glide.with(mContext).load(item.getThumbnail()).apply(requestOptions).into(iv);
         }
         helper.addOnClickListener(R.id.ll_news_detail);
 
     }
 }
+/*
+RequestOptions requestOptions = new RequestOptions()
+        .placeholder(R.mipmap.placeholder) //加载中图片
+        .error(R.mipmap.error) //加载失败图片
+        .fallback(R.mipmap.fallback) //url为空图片
+        .centerCrop() // 填充方式
+        .override(600,600) //尺寸
+        .transform(new CircleCrop()) //圆角
+        .priority(Priority.HIGH) //优先级
+        .diskCacheStrategy(DiskCacheStrategy.NONE); //缓存策略，后面详细介绍
+
+Glide.with(this).load(IMG_URL1).apply(requestOptions).into(testIv1);
+Glide.with(this).load(IMG_URL2).apply(requestOptions).into(testIv2);
+
+ */
